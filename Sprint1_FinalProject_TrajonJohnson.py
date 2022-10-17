@@ -31,7 +31,7 @@ def api_airports_id():
 
     for airport in airports:
         if airport['id'] == id:
-            results.append(airport) #necessary if statement to check for rows in watches
+            results.append(airports) #necessary if statement to check for rows in watches
     return jsonify(results)
 
 @app.route('/api/airports', methods=['POST']) #route to add a record to the database
@@ -43,13 +43,13 @@ def add_airports():
 
     myCreds = creds.Creds()
     conn = create_connection(myCreds.conString, myCreds.userName, myCreds.password, myCreds.dbName)
-    sql = "INSERT INTO watches (airportcode, airportname, country) VALUES ('%s', '%s', '%s')" % (newairportcode, newairportname, newcountry) #adding the user input into the column rows
-    watch = execute_read_query(conn, sql)
+    sql = "INSERT INTO airports (airportcode, airportname, country) VALUES ('%s', '%s', '%s')" % (newairportcode, newairportname, newcountry) #adding the user input into the column rows
+    airports = execute_read_query(conn, sql)
     conn.commit()
     
     return "Add request successful"
 
-@app.route('/api/airports', methods=['PUT']) #route to update a sales price in the database by id
+@app.route('/api/airports', methods=['PUT']) #route to update an airport in the database by id
 def update_airports():
     request_data = request.get_json()
     idtoUpdate = request_data['id'] #the parameter needed to find the record to update 
@@ -60,20 +60,20 @@ def update_airports():
     myCreds = creds.Creds()
     conn = create_connection(myCreds.conString, myCreds.userName, myCreds.password, myCreds.dbName)
     sql = "UPDATE airports SET airportcode = '%s', airportname = '%s', country = '%s' WHERE (id = '%s')" % (updateairportcode, updateairportname, updatecountry, idtoUpdate) #sql query that gets sent to the database
-    watch = execute_read_query(conn, sql)
+    airports = execute_read_query(conn, sql)
     conn.commit()
 
     return "Update entry successful"
 
 @app.route('/api/airports', methods=['DELETE']) #route to delete a record from the database by id
 def delete_airports():
-    request_data = request.get_json() #funtion to delete a watch record from the database
+    request_data = request.get_json() #funtion to delete an airport record from the database
     idtoDelete = request_data['id']
 
     myCreds = creds.Creds()
     conn = create_connection(myCreds.conString, myCreds.userName, myCreds.password, myCreds.dbName)
-    sql = "DELETE FROM watches WHERE (id = '%s')" % (idtoDelete) #the delete query that will be passed to the database
-    watch = execute_read_query(conn, sql)
+    sql = "DELETE FROM airports WHERE (id = '%s')" % (idtoDelete) #the delete query that will be passed to the database
+    airports = execute_read_query(conn, sql)
     conn.commit()
 
     return "Delete request successful"
@@ -94,7 +94,7 @@ def api_plane_id():
 
     for plane in planes:
         if plane['id'] == id:
-            results.append(plane) #necessary if statement to check for rows in watches
+            results.append(planes) #necessary if statement to check for rows in watches
     return jsonify(results)
     
 @app.route('/api/planes', methods=['POST']) #route to add a record to the database
@@ -107,8 +107,8 @@ def add_planes():
 
     myCreds = creds.Creds()
     conn = create_connection(myCreds.conString, myCreds.userName, myCreds.password, myCreds.dbName)
-    sql = "INSERT INTO watches (make, model, ayear, capacity) VALUES ('%s', '%s', '%s', '%s')" % (newplanemake, newplanemodel, newplaneayear, newplanecapacity) #adding the user input into the column rows
-    watch = execute_read_query(conn, sql)
+    sql = "INSERT INTO planes (make, model, ayear, capacity) VALUES ('%s', '%s', '%s', '%s')" % (newplanemake, newplanemodel, newplaneayear, newplanecapacity) #adding the user input into the column rows
+    planes = execute_read_query(conn, sql)
     conn.commit()
     
     return "Add request successful"
@@ -124,21 +124,21 @@ def update_planes():
     
     myCreds = creds.Creds()
     conn = create_connection(myCreds.conString, myCreds.userName, myCreds.password, myCreds.dbName)
-    sql = "UPDATE watches SET make = '%s', model = '%s', ayear = '%s', capacity = '%s' WHERE (id = '%s')" % (updateplanemake, updateplanemodel, updateayear, updatecapacity, idtoUpdate) #sql query that gets sent to the database
-    watch = execute_read_query(conn, sql)
+    sql = "UPDATE planes SET make = '%s', model = '%s', ayear = '%s', capacity = '%s' WHERE (id = '%s')" % (updateplanemake, updateplanemodel, updateayear, updatecapacity, idtoUpdate) #sql query that gets sent to the database
+    planes = execute_read_query(conn, sql)
     conn.commit()
 
     return "Update entry successful"
 
 @app.route('/api/planes', methods=['DELETE']) #route to delete a record from the database by id
 def delete_planes():
-    request_data = request.get_json() #funtion to delete a watch record from the database
+    request_data = request.get_json() #funtion to delete a plane record from the database
     idtoDelete = request_data['id']
 
     myCreds = creds.Creds()
     conn = create_connection(myCreds.conString, myCreds.userName, myCreds.password, myCreds.dbName)
     sql = "DELETE FROM planes WHERE (id = '%s')" % (idtoDelete) #the delete query that will be passed to the database
-    watch = execute_read_query(conn, sql)
+    planes = execute_read_query(conn, sql)
     conn.commit()
 
     return "Delete request successful"
@@ -159,7 +159,7 @@ def api_flights_id():
 
     for flight in flights:
         if flight['id'] == id:
-            results.append(flight) #necessary if statement to check for rows in watches
+            results.append(flights) #necessary if statement to check for rows in watches
     return jsonify(results)
     
 @app.route('/api/flights', methods=['POST']) #route to add a record to the database
@@ -172,8 +172,8 @@ def add_flights():
 
     myCreds = creds.Creds()
     conn = create_connection(myCreds.conString, myCreds.userName, myCreds.password, myCreds.dbName)
-    sql = "INSERT INTO watches (planeid, airportfromid, airporttoid, adate) VALUES ('%s', '%s', '%s', %s)" % (newplaneid, newairportfromid, newairporttoid, newadate) #adding the user input into the column rows
-    watch = execute_read_query(conn, sql)
+    sql = "INSERT INTO flights (planeid, airportfromid, airporttoid, adate) VALUES ('%s', '%s', '%s', '%s')" % (newplaneid, newairportfromid, newairporttoid, newadate) #adding the user input into the column rows
+    flights = execute_read_query(conn, sql)
     conn.commit()
     
     return "Add request successful"
@@ -186,7 +186,7 @@ def delete_flights():
     myCreds = creds.Creds()
     conn = create_connection(myCreds.conString, myCreds.userName, myCreds.password, myCreds.dbName)
     sql = "DELETE FROM flights WHERE (id = '%s')" % (idtoDelete) #the delete query that will be passed to the database
-    watch = execute_read_query(conn, sql)
+    flights = execute_read_query(conn, sql)
     conn.commit()
 
     return "Delete request successful"
