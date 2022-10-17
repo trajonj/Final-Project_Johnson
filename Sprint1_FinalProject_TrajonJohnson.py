@@ -31,7 +31,7 @@ def api_airports_id():
 
     for airport in airports:
         if airport['id'] == id:
-            results.append(airports) #necessary if statement to check for rows in watches
+            results.append(airports) #necessary if statement to check for rows in airports
     return jsonify(results)
 
 @app.route('/api/airports', methods=['POST']) #route to add a record to the database
@@ -94,7 +94,7 @@ def api_plane_id():
 
     for plane in planes:
         if plane['id'] == id:
-            results.append(planes) #necessary if statement to check for rows in watches
+            results.append(planes) #necessary if statement to check for rows in planes
     return jsonify(results)
     
 @app.route('/api/planes', methods=['POST']) #route to add a record to the database
@@ -113,7 +113,7 @@ def add_planes():
     
     return "Add request successful"
 
-@app.route('/api/planes', methods=['PUT']) #route to update a sales price in the database by id
+@app.route('/api/planes', methods=['PUT']) #route to update a plane in the database by id
 def update_planes():
     request_data = request.get_json()
     idtoUpdate = request_data['id'] #the parameter needed to find the record to update 
@@ -159,7 +159,7 @@ def api_flights_id():
 
     for flight in flights:
         if flight['id'] == id:
-            results.append(flights) #necessary if statement to check for rows in watches
+            results.append(flights) #necessary if statement to check for rows in flights
     return jsonify(results)
     
 @app.route('/api/flights', methods=['POST']) #route to add a record to the database
@@ -180,7 +180,7 @@ def add_flights():
 
 @app.route('/api/flights', methods=['DELETE']) #route to delete a record from the database by id
 def delete_flights():
-    request_data = request.get_json() #funtion to delete a watch record from the database
+    request_data = request.get_json() #funtion to delete a flight record from the database
     idtoDelete = request_data['id']
 
     myCreds = creds.Creds()
